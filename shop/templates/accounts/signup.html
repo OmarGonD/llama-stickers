@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% load staticfiles %}
+
+{% load crispy_forms_tags %}
+
+{% block metadescription %}
+    Regístrate para que recibas las últimas novedades. Tenemos los mejores cojines de El Perú.
+{% endblock %}
+{% block title %}
+    Crear una nueva cuenta - Perfect Cushion Store
+{% endblock %}
+
+{% block content %}
+
+    <div>
+        {% if not form.is_valid %}
+
+            <div class="mx-auto">
+                <h1 class="text-center my_title">
+                    Crear una nueva cuenta
+                </h1>
+                <br>
+                <div class="col-9 col-sm-9 col-md-6 col-lg-5 mx-auto-bg-light">
+                    <br>
+                    <p>Ingresa la siguiente información para crear una cuenta</p>
+                    <form method="post">
+                        {% csrf_token %}
+                        <p>{{ form | crispy }}</p>
+                        <button class="btn btn-secondary">Crear cuenta</button>
+                    </form>
+                    <br>
+                </div>
+            </div>
+        {% else %}
+            <div class="mx-auto">
+                <br>
+                <h1 class="my_title text-center">
+                    Tu cuenta ha sido creada exitosamente.
+                </h1>
+                <br>
+                <div>
+                    <p>
+                        Estimado cliente,
+                        <br>
+                        <br>
+                        Su cuenta ha sido creada y ya puede ser usada
+
+                    <br>
+                    <a href="{% url 'shop:allProdCat' %}">Seguir comprando</a> y disfruta de los mejores cojines
+                    </p>
+                </div>
+            </div>
+    {% endif %}
+    </div>
+    <br>
+{% endblock %}

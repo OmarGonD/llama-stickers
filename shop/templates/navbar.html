@@ -1,0 +1,86 @@
+{% load staticfiles %}
+
+<!--- GALLITO NAVBAR --->
+
+<nav class="navbar navbar-expand-md fixed-top navbar-bg my_top_navbar_div">
+
+     <a class="navbar-brand" href="#"><img class="" src="{% static 'img/Llama logo.png' %}" alt="{{ product.name }}"></a>
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
+            aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+
+
+        <ul class="navbar-nav mr-auto my_custom_menu">
+
+            <li class="nav-item">
+                <a class="nav-link" href="#">Stickers <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Etiquetas</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Magnetos</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Pines</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Pines</a>
+            </li>
+
+        </ul>
+
+        <ul class="navbar-nav ml-auto my_custom_menu">
+            {% if request.user.is_authenticated and request.user.first_name %}
+                <li class="nav-item">
+                    <a class="nav-link"> {{ request.user.first_name }}</a>
+{#                    <i class="fas fa-user-circle"></i>#}
+                </li>
+                 <li class="nav-item">
+                    <a class="nav-link" href="{% url 'signout' %}">Salir <i class="fas fa-sign-out-alt"></i></a>
+                </li>
+            {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'signin' %}">Ingresar <i class="fas fa-sign-in-alt"></i></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'signup' %}">Registrarse <i class="fas fa-user-plus"></i></a>
+                </li>
+
+
+            {% endif %}
+        </ul>
+
+
+{#        <ul class="navbar-nav ml-auto">#}
+{#        #}
+{#            <li class="nav-item">#}
+{#                <a class="nav-link"><i class="fas fa-shopping-cart"></i></a>#}
+{#            </li>#}
+{##}
+{#            {% if user.is_authenticated %}#}
+{#                <li class="nav-item">#}
+{#                    <a class="nav-link" href="{% url 'logout' %}">Logout</a>#}
+{#                </li>#}
+{#                <li class="nav-item">#}
+{#                    <a class="nav-link" href="#">{{ user }}</a>#}
+{#                </li>#}
+{#            {% else %}#}
+{#                <li class="nav-item">#}
+{#                    <a class="nav-link" href={% url 'login' %}>LogIn</a>#}
+{#                </li>#}
+{#            {% endif %}#}
+{##}
+{#            <li class="nav-item">#}
+{#                <a class="nav-link" href="#">Registro</a>#}
+{#            </li>#}
+{#        </ul>#}
+
+
+    </div>
+</nav>
+<br>
