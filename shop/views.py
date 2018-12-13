@@ -47,11 +47,11 @@ def allProdCat(request, c_slug=None):
 class StepOneView(FormView):
     form_class = StepOneForm
     template_name = 'shop/product.html'
-    success_url = 'shop/subir-arte'
+    success_url = 'subir-arte'
 
     def get_initials(self):
          # pre-populate form if someone goes back and forth between forms
-         initial = super(StepOneView, self).get_initial()
+         initial = super(StepOneView, self).get_initials()
          initial['size'] = self.request.session.get('size', None)
          initial['quantity'] = self.request.session.get('quantity', None)
          initial['product'] = Product.objects.get(
@@ -70,10 +70,14 @@ class StepOneView(FormView):
         )
         return context
 
+    def form_invalid(self, form):
+        print('-------------Hellow world')
+
 
     def form_valid(self, form):
         # In form_valid method we can access the form data in dict format
         # and will store it in django session
+        print('-p-----Step One',form.cleaned_data.get(('product')) )
         self.request.session['product'] = form.cleaned_data.get('product')
         self.request.session['size'] = form.cleaned_data.get('size')
         self.request.session['quantity'] = form.cleaned_data.get('quantity')
@@ -104,11 +108,18 @@ class StepTwoView(CreateView):
         )
         return context
 
+    def form_invalid(self, form):
+        print('---------->>>errrpr', form.errors)
+
+
     def form_valid(self, form):
         # form.instance.product = Product.objects.get(
         #     category__slug=self.kwargs['c_slug'],
         #     slug=self.kwargs['product_slug']
         # )
+        print('--------')
+        from pdb import set_trace
+        # set_trace()
         form.instance.product = self.request.session.get('product')  # get tamanios from session
         form.instance.size = self.request.session.get('size')  # get tamanios from session
         form.instance.quantity = self.request.session.get('quantity')  # get cantidades from session
@@ -116,6 +127,8 @@ class StepTwoView(CreateView):
         del self.request.session['quantity']  # delete cantidades value from session
         del self.request.session['size']  # delete tamanios value from session
         self.request.session.modified = True
+        form.save()
+        return HttpResponseRedirect(self.get_success_url())
         return super(StepTwoView, self).form_valid(form)
 
 

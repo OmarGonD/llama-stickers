@@ -35,18 +35,19 @@ class StepOneForm(forms.Form):
 
 
 class StepTwoForm(forms.ModelForm):
-    instructions = forms.CharField(widget=forms.Textarea)
+    # comment = forms.CharField(widget=forms.Textarea)
 
     class Meta:
         model = SizeQuantity
-        fields = ('image', 'comment')
+        fields = ('image', )
 
     def __init__(self, *args, **kwargs):
         super(StepTwoForm, self).__init__(*args, **kwargs)
-        self.fields['comment'].required = False
+        # self.fields['comment'].required = False
         self.fields['image'].required = False
 
     def save(self, commit=True):
+
         instance = super(StepTwoForm, self).save(commit=commit)
         # self.send_email()
         return instance

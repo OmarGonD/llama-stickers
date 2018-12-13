@@ -68,7 +68,7 @@ class SizeQuantity(models.Model):
     quantity = models.CharField(max_length=10, choices=CANTIDADES)
     image = models.ImageField(upload_to='images', blank=True, null=True)
     # imagenes = models.ImageField(upload_to='category', blank=True)
-    comment = models.CharField(max_length=200, blank=True, null=True, default='')
+    # comment = models.CharField(max_length=200, blank=True, null=True, default='')
     uploaded_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
