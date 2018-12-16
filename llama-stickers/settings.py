@@ -77,7 +77,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'shop.context_processor.menu_links',
-                'cart.context_processor.counter'
+                # 'cart.context_processor.counter'
             ],
         },
     },
@@ -156,4 +156,11 @@ STRIPE_SECRET_KEY = 'sk_test_fFHncrzOzBPS3XxDQM0TWMfy'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
+
+### Culqui Settings ###
+
+
+CULQI_PUBLISHABLE_KEY = 'pk_test_d4d1nYriXvMV0YKk'
+
+CULQI_SECRET_KEY = 'sk_test_sOlYqSB5PDAkwQuZ'
 

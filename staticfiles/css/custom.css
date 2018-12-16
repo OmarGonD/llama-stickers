@@ -230,7 +230,7 @@ ul.my_products_list li {
 
 
 .orange-bg {
-    background-color: red;
+    background-color: orange;
 }
 
 /*nav.navbar{padding: 0 1rem;}*/
@@ -252,7 +252,9 @@ li.nav-item:hover {
 }
 
 
-
+.text-white {
+    color: white;
+}
 
 /* BOTONES JUMBOTRON */
 

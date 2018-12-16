@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django import forms
-from .models import SizeQuantity
+from cart.models import SizeQuantity
 from django.core.mail import send_mail
 
 # Variables
@@ -35,15 +35,15 @@ class StepOneForm(forms.Form):
 
 
 class StepTwoForm(forms.ModelForm):
-    # comment = forms.CharField(widget=forms.Textarea)
+    comment = forms.CharField(widget=forms.Textarea)
 
     class Meta:
         model = SizeQuantity
-        fields = ('image', )
+        fields = ('image', 'comment')
 
     def __init__(self, *args, **kwargs):
         super(StepTwoForm, self).__init__(*args, **kwargs)
-        # self.fields['comment'].required = False
+        self.fields['comment'].required = False
         self.fields['image'].required = False
 
     def save(self, commit=True):

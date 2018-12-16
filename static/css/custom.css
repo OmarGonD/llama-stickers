@@ -252,7 +252,9 @@ li.nav-item:hover {
 }
 
 
-
+.text-white {
+    color: white;
+}
 
 /* BOTONES JUMBOTRON */
 

@@ -9,19 +9,18 @@
 
     <main role="main">
 
-{#        <script>#}
-{##}
-{#            $(function () {#}
-{#                $("input:file").change(function () {#}
-{#                    var fileName = $(this).val();#}
-{#                    if (fileName != "") {#}
-{#                        $("#instrucciones-adicionales").show();#}
-{#                    } else {#}
-{#                        $("#instrucciones-adicionales").hide();#}
-{#                    }#}
-{#                });#}
-{#            });#}
-{#        </script>#}
+        <script>
+            $(function () {
+                $("input:file").change(function () {
+                    var fileName = $(this).val();
+                    if (fileName != "") {
+                        $("#instrucciones-adicionales").show();
+                    } else {
+                        $("#instrucciones-adicionales").hide();
+                    }
+                });
+            });
+        </script>
 
         <div class="row padding80-top">
 
@@ -35,11 +34,11 @@
 
                         {{ form.image|as_crispy_field }}
 
-                        <div id="instrucciones-adicionales"  style="display: none">
+                        <div id="instrucciones-adicionales"  style="display:none">
 
                             <p class="bold-font"> Instrucciones adicionales (opcional):</p>
 
-{#                            {{ form.comment|as_crispy_field }}#}
+                            {{ form.comment|as_crispy_field }}
 
                         </div>
                     </div>

@@ -1,10 +1,10 @@
 from django.contrib import admin
-from .models import Category, Product, SizeQuantity
+from .models import Category, Product
 
 # Register your models here.
 
 
-admin.site.register(SizeQuantity)
+# admin.site.register(SizeQuantity)
 
 class CategoryAdmin(admin.ModelAdmin):
     list_display = ['name', 'slug']

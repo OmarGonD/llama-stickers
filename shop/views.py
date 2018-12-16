@@ -7,6 +7,9 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, authenticate, logout
 from django.views.generic.edit import CreateView, FormView
 from .forms import StepOneForm, StepTwoForm
+from cart.models import Cart
+from cart.views import _cart_id
+
 
 
 # Create your views here.
@@ -71,13 +74,16 @@ class StepOneView(FormView):
         return context
 
     def form_invalid(self, form):
-        print('-------------Hellow world')
+        print('Step one: form is NOT valid')
 
 
     def form_valid(self, form):
         # In form_valid method we can access the form data in dict format
         # and will store it in django session
-        print('-p-----Step One',form.cleaned_data.get(('product')) )
+        print('--Step One: Form is Valid', Product.objects.get(
+            category__slug=self.kwargs['c_slug'],
+            slug=self.kwargs['product_slug']
+        ).id)
         self.request.session['product'] = form.cleaned_data.get('product')
         self.request.session['size'] = form.cleaned_data.get('size')
         self.request.session['quantity'] = form.cleaned_data.get('quantity')
@@ -88,7 +94,7 @@ class StepOneView(FormView):
 class StepTwoView(CreateView):
     form_class = StepTwoForm
     template_name = 'shop/subir-arte.html'
-    success_url = '/'
+    success_url = '/cart'
 
     # def get_form_kwargs(self):
     #     kwargs = super().get_form_kwargs()
@@ -109,26 +115,30 @@ class StepTwoView(CreateView):
         return context
 
     def form_invalid(self, form):
-        print('---------->>>errrpr', form.errors)
+        print('StepTwoForm is not Valid', form.errors)
 
 
     def form_valid(self, form):
-        # form.instance.product = Product.objects.get(
-        #     category__slug=self.kwargs['c_slug'],
-        #     slug=self.kwargs['product_slug']
-        # )
-        print('--------')
-        from pdb import set_trace
-        # set_trace()
-        form.instance.product = self.request.session.get('product')  # get tamanios from session
+
+        try:
+            cart = Cart.objects.get(cart_id=_cart_id(self.request))
+        except Cart.DoesNotExist:
+            cart = Cart.objects.create(
+                    cart_id = _cart_id(self.request)
+                )
+
+            cart.save()
+
+        form.instance.cart = cart
+        form.instance.product = Product.objects.get(
+            category__slug=self.kwargs['c_slug'],
+            slug=self.kwargs['product_slug']
+        )  # get tamanios from session
         form.instance.size = self.request.session.get('size')  # get tamanios from session
         form.instance.quantity = self.request.session.get('quantity')  # get cantidades from session
-        del self.request.session['product']
         del self.request.session['quantity']  # delete cantidades value from session
         del self.request.session['size']  # delete tamanios value from session
         self.request.session.modified = True
-        form.save()
-        return HttpResponseRedirect(self.get_success_url())
         return super(StepTwoView, self).form_valid(form)
 
 

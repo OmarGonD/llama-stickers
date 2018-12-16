@@ -61,15 +61,15 @@ class Product(models.Model):
         return '{}'.format(self.name)
 
 
-class SizeQuantity(models.Model):
-
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    size = models.CharField(max_length=10, choices=TAMANIOS)
-    quantity = models.CharField(max_length=10, choices=CANTIDADES)
-    image = models.ImageField(upload_to='images', blank=True, null=True)
-    # imagenes = models.ImageField(upload_to='category', blank=True)
-    # comment = models.CharField(max_length=200, blank=True, null=True, default='')
-    uploaded_at = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return self.size
+# class SizeQuantity(models.Model):
+#
+#     product = models.ForeignKey(Product, on_delete=models.CASCADE)
+#     size = models.CharField(max_length=10, choices=TAMANIOS)
+#     quantity = models.CharField(max_length=10, choices=CANTIDADES)
+#     image = models.ImageField(upload_to='images', blank=True, null=True)
+#     # imagenes = models.ImageField(upload_to='category', blank=True)
+#     # comment = models.CharField(max_length=200, blank=True, null=True, default='')
+#     uploaded_at = models.DateTimeField(auto_now_add=True)
+#
+#     def __str__(self):
+#         return self.size

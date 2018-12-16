@@ -7,6 +7,24 @@
     Cart - Perfect Cushion Store
 {% endblock %}
 {% block content %}
+
+
+
+    <script>
+        Culqi.publicKey = '{{ data_key }}';
+    </script>
+
+    <script>
+        Culqi.settings({
+            title: 'Stickers Gallito Store',
+            currency: 'PEN',
+            description: 'Stickers varios',
+            amount: {{ culqi_total }}
+        });
+    </script>
+
+
+
     {% if not cart_items %}
         <div>
             <div class="text-center">
@@ -31,111 +49,136 @@
                 <br>
             </div>
         </div>
+        <div class="row">
+        <div class="col-md-6">
     {% endif %}
-    <div class="row mx-auto">
-        <div class="col-12 col-sm-12 col-md-12 col-lg-6 text-center">
-            <table class="table my_custom_table">
-                <thead class="my_custom_thead">
+<div class="row mx-auto">
+    <div class="col-12 col-sm-12 col-md-12 col-lg-6 text-center">
+        <table class="table my_custom_table">
+            <thead class="my_custom_thead">
+            <tr>
+                <th colspan="5">
+                    Tus items
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for cart_item in cart_items %}
                 <tr>
-                    <th colspan="5">
-                        Tus items
-                    </th>
+                    <td>
+                        <a href="cart_item.product.get_absolute_url"><img
+                                src="{{ cart_item.image.url }}" alt=""
+                                class="float-left rounded custom_image"></a>
+                    </td>
+                    <td class="text-left">
+                        {{ cart_item.product.name }}
+                        <br>
+                        {{ cart_item.size }}
+                        <br>
+                        {{ cart_item.image_filename }}
+                        <br>
+                        SKU: {{ cart_item.product.id }}
+                        <br>
+                        Precio unitario: {{ cart_item.product.price }}
+                        <br>
+                        Costo total: {{ cart_item.quantity }} * {{ cart_item.product.price }}
+                    </td>
+                    <td>
+                        S/.{{ cart_item.sub_total }}
+                    </td>
+                    {#                        {% if cart_item.quantity < cart_item.product.stock %}#}
+                    {#                            <td>#}
+                    {#                                <a href="{% url 'cart:add_cart' cart_item.product.id %}" class="custom_a"><i#}
+                    {#                                        class="far fa-plus-circle custom_icon"></i></a>&nbsp;#}
+                    {#                                <a href="{% url 'cart:cart_remove' cart_item.product.id %}"><i#}
+                    {#                                        class="far fa-minus-square custom_icon"></i></a>&nbsp;<a#}
+                    {#                                    href="{% url 'cart:full_remove' cart_item.product.id %}"#}
+                    {#                                    class="custom-icon"><i#}
+                    {#                                    class="fas fa-trash-alt custom_icon"></i></a>#}
+                    {#                            </td>#}
+                    {#                        {% else %}#}
+                    <td>
+
+                        {#                                <a href="{% url 'cart:cart_remove' cart_item.id %}"><i#}
+                        {#                                        class="far fa-minus-square"></i></a>&nbsp#}
+                        <a
+                                href="{% url 'cart:full_remove' cart_item.id %}"
+                                class="custom_icon"><i
+                                class="fas fa-trash-alt custom_icon"></i></a>
+                    </td>
+                    <td></td>
+                    {#                                                {% endif %}#}
+
                 </tr>
-                </thead>
-                <tbody>
-                {% for cart_item in cart_items %}
-                    <tr>
-                        <td>
-                            <a href="cart_item.product.get_absolute_url"><img
-                                    src="{{ cart_item.product.image.url }}" alt=""
-                                    class="float-left rounded custom_image"></a>
-                        </td>
-                        <td class="text-left">
-                            {{ cart_item.product.name }}
-                            <br>
-                            SKU: {{ cart_item.product.id }}
-                            <br>
-                            Precio unitario: {{ cart_item.product.price }}
-                            <br>
-                            Costo total: {{ cart_item.quantity }} * {{ cart_item.product.price }}
-                        </td>
-                        <td>
-                            S/.{{ cart_item.sub_total }}
-                        </td>
-                        {% if cart_item.quantity < cart_item.product.stock %}
-                            <td>
-                                <a href="{% url 'cart:add_cart' cart_item.product.id %}" class="custom_a"><i
-                                        class="far fa-plus-circle custom_icon"></i></a>&nbsp;
-                                <a href="{% url 'cart:cart_remove' cart_item.product.id %}"><i
-                                        class="far fa-minus-square custom_icon"></i></a>&nbsp;<a
-                                    href="{% url 'cart:full_remove' cart_item.product.id %}"
-                                    class="custom-icon"><i
-                                    class="fas fa-trash-alt custom_icon"></i></a>
-                            </td>
-                        {% else %}
-                            <td>
-                                <a href="{% url 'cart:cart_remove' cart_item.product.id %}"><i
-                                        class="far fa-minus-square"></i></a>&nbsp<a
-                                    href="{% url 'cart:full_remove' cart_item.product.id %}"
-                                    class="custom_icon"><i
-                                    class="fas fa-trash-alt custom_icon"></i></a>
-                            </td>
-                            <td></td>
-                        {% endif %}
-
-                    </tr>
-                {% endfor %}
-                </tbody>
-            </table>
-        </div>
-        <!-- CHECK OUT TABLE -->
-        <div class="col-12 col-sm-12 col-md-12 col-lg-6 text-center">
-
-            <table class="table my_custom_table">
-                <thead class="my_custom_thead">
-                <tr>
-                    <th>
-                        Checkout
-                    </th>
-                </tr>
-                </thead>
-                <tboyd>
-                    <tr>
-                        <td>
-                            Por favor, revise su Carrito de Compras antes de proceder con el pago de la
-                            orden
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="text-left">
-                            Your total is:
-                            <stron>{{ total }}</stron>
-                        </td>
-                    </tr>
-                </tboyd>
-            </table>
-            <div class="mx-auto">
-                <form action="" method="POST">
-                    {% csrf_token %}
-                    <script
-                            src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-                            data-key= "{{ data_key }}"
-                            data-amount="{{ stripe_total }}"
-                            data-name="Perfect Cushion Shop"
-                            data-description="{{ description }}"
-                            data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
-                            data-locale="auto"
-                            data-currency = "pen"
-                            data-shipping-address = "true"
-                            data-billing-address = "true">
-                    </script>
-                </form>
-                <a href="{% url 'shop:allProdCat' %}" class="btn btn-secondary btn-block my_custom_btn">Seguir
-                    comprando</a>
-            </div>
-
-        </div>
+            {% endfor %}
+            </tbody>
+        </table>
     </div>
+</div>
+
+</div>
+<div class="col-md-6">
+    <!-- CHECK OUT TABLE -->
+    <div class="col-12 col-sm-12 col-md-12 col-lg-6 text-center">
+
+        <table class="table my_custom_table">
+            <thead class="my_custom_thead">
+            <tr>
+                <th>
+                    Checkout
+                </th>
+            </tr>
+            </thead>
+            <tboyd>
+                <tr>
+                    <td>
+                        Por favor, revise su Carrito de Compras antes de proceder con el pago de la
+                        orden
+                    </td>
+                </tr>
+                <tr>
+                    <td class="text-left">
+                        Your total is:
+                        <stron>{{ total }}</stron>
+                    </td>
+                </tr>
+            </tboyd>
+        </table>
+        <div class="mx-auto">
+            <form action="" method="POST">
+                {% csrf_token %}
+{#                <script#}
+{#                        src="https://checkout.stripe.com/checkout.js" class="stripe-button"#}
+{#                        data-key="{{ data_key }}"#}
+{#                        data-amount="{{ stripe_total }}"#}
+{#                        data-name="Stickers Gallito"#}
+{#                        data-description="{{ description }}"#}
+{#                        data-image="{% static 'img/Llama logo.png' %}"#}
+{#                        data-locale="auto"#}
+{#                        data-currency="pen"#}
+{#                        data-shipping-address="true"#}
+{#                        data-billing-address="true">#}
+{#                </script>#}
+            </form>
+
+            <button id="buyButton">Pagar</button>
+            <a href="{% url 'shop:allProdCat' %}" class="btn btn-secondary btn-block my_custom_btn">Seguir
+                comprando</a>
+        </div>
+
+        <script>
+
+            $('#buyButton').on('click', function(e) {
+            // Abre el formulario con la configuración en Culqi.settings
+            Culqi.open();
+            e.preventDefault();
+            });
+
+        </script>
+
+    </div>
+</div>
+</div>
     <br>
 
 {% endblock %}
