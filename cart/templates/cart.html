@@ -11,7 +11,7 @@
 
 
     <script>
-        Culqi.publicKey = '{{ data_key }}';
+        Culqi.publicKey = '{{ culqi_my_public_key }}';
     </script>
 
     <script>
@@ -85,29 +85,13 @@
                     </td>
                     <td>
                         S/.{{ cart_item.sub_total }}
-                    </td>
-                    {#                        {% if cart_item.quantity < cart_item.product.stock %}#}
-                    {#                            <td>#}
-                    {#                                <a href="{% url 'cart:add_cart' cart_item.product.id %}" class="custom_a"><i#}
-                    {#                                        class="far fa-plus-circle custom_icon"></i></a>&nbsp;#}
-                    {#                                <a href="{% url 'cart:cart_remove' cart_item.product.id %}"><i#}
-                    {#                                        class="far fa-minus-square custom_icon"></i></a>&nbsp;<a#}
-                    {#                                    href="{% url 'cart:full_remove' cart_item.product.id %}"#}
-                    {#                                    class="custom-icon"><i#}
-                    {#                                    class="fas fa-trash-alt custom_icon"></i></a>#}
-                    {#                            </td>#}
-                    {#                        {% else %}#}
-                    <td>
 
-                        {#                                <a href="{% url 'cart:cart_remove' cart_item.id %}"><i#}
-                        {#                                        class="far fa-minus-square"></i></a>&nbsp#}
                         <a
                                 href="{% url 'cart:full_remove' cart_item.id %}"
                                 class="custom_icon"><i
                                 class="fas fa-trash-alt custom_icon"></i></a>
                     </td>
                     <td></td>
-                    {#                                                {% endif %}#}
 
                 </tr>
             {% endfor %}
@@ -145,21 +129,6 @@
             </tboyd>
         </table>
         <div class="mx-auto">
-            <form action="" method="POST">
-                {% csrf_token %}
-{#                <script#}
-{#                        src="https://checkout.stripe.com/checkout.js" class="stripe-button"#}
-{#                        data-key="{{ data_key }}"#}
-{#                        data-amount="{{ stripe_total }}"#}
-{#                        data-name="Stickers Gallito"#}
-{#                        data-description="{{ description }}"#}
-{#                        data-image="{% static 'img/Llama logo.png' %}"#}
-{#                        data-locale="auto"#}
-{#                        data-currency="pen"#}
-{#                        data-shipping-address="true"#}
-{#                        data-billing-address="true">#}
-{#                </script>#}
-            </form>
 
             <button id="buyButton">Pagar</button>
             <a href="{% url 'shop:allProdCat' %}" class="btn btn-secondary btn-block my_custom_btn">Seguir
@@ -168,12 +137,65 @@
 
         <script>
 
-            $('#buyButton').on('click', function(e) {
-            // Abre el formulario con la configuración en Culqi.settings
-            Culqi.open();
-            e.preventDefault();
+            $('#buyButton').on('click', function (e) {
+                // Abre el formulario con la configuración en Culqi.settings
+                Culqi.open();
+                e.preventDefault();
             });
 
+        </script>
+
+        <script>
+            function getCookie(name) {
+                var cookieValue = null;
+                if (document.cookie && document.cookie !== '') {
+                    var cookies = document.cookie.split(';');
+                    for (var i = 0; i < cookies.length; i++) {
+                        var cookie = jQuery.trim(cookies[i]);
+// Does this cookie string begin with the name we want?
+                        if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                            break;
+                        }
+                    }
+                }
+                return cookieValue;
+            }
+
+            var csrftoken = getCookie('csrftoken');
+
+            function csrfSafeMethod(method) {
+// these HTTP methods do not require CSRF protection
+                return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+            }
+
+            $.ajaxSetup({
+                beforeSend: function (xhr, settings) {
+                    if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                        xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                    }
+                }
+            });
+
+
+            function culqi() {
+                if (Culqi.token) {
+                    $.post("{% url 'cart:cart_charge' %}", {
+                            amount: {{ culqi_total }},
+                            currency_code: 'PEN',
+                            email: Culqi.token.email,
+                            source_id: Culqi.token.id,
+                            last_four: Culqi.token.last_four,
+                        },
+                    ).done(function () {
+                        // do something with scess
+                        window.location.href = "{% url 'cart:thank_you' %}";
+                    })
+                } else {
+                        console.log(Culqi.error);
+                        alert(Culqi.error.user_message);
+                }
+            }
         </script>
 
     </div>

@@ -12,11 +12,9 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
           integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
     <link rel="shortcut icon" type="image/png" href="{% static 'img/llama-favicon.png' %}"/>
-    <!-- Incluyendo Culqi Checkout -->
-    <script src="https://checkout.culqi.com/js/v3"></script>
     <script
-            src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-            integrity="sha256-3edrmyuQ0w65f8gfBsqowzjJe2iM6n0nKciPUp8y+7E="
+            src="https://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
             crossorigin="anonymous"></script>
     <!-- Incluyendo Culqi Checkout -->
     <script src="https://checkout.culqi.com/js/v3"></script>
@@ -24,12 +22,6 @@
 
 </head>
 <body>
-
-
-
-
-
-
 
 
 <div>
@@ -44,6 +36,10 @@
 
         {% endif %}
 
+{#        {% if "/shop/$" in request.path %}#}
+{#            {% include 'header.html' %}#}
+{#        {% endif %}#}
+
         <div class="container-fluid">
 
             {% block content %}
@@ -56,10 +52,7 @@
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     {#    <script src="{% static 'js/jquery-3.2.1.slim.min.js' %}"></script>#}
-    <script
-            src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-            integrity="sha256-3edrmyuQ0w65f8gfBsqowzjJe2iM6n0nKciPUp8y+7E="
-            crossorigin="anonymous"></script>
+
     <script src="{% static 'js/popper.min.js' %}"></script>
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
 

@@ -94,17 +94,7 @@ class StepOneView(FormView):
 class StepTwoView(CreateView):
     form_class = StepTwoForm
     template_name = 'shop/subir-arte.html'
-    success_url = '/cart'
-
-    # def get_form_kwargs(self):
-    #     kwargs = super().get_form_kwargs()
-    #     kwargs['initial'] = {
-    #         'product': Product.objects.get(
-    #             category__slug=self.kwargs['c_slug'],
-    #             slug=self.kwargs['product_slug']
-    #         )
-    #     }
-    #     return kwargs
+    success_url = '/cart/'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
