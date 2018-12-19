@@ -3,15 +3,15 @@ from shop.models import Product
 
 
 
-TAMANIOS = (('variante_50', '50 mm x 50 mm',), ('variante_75', '75 mm x 75 mm',),
-            ('variante_100', '100 mm x 100 mm',), ('variante_125', '125 mm x 125 mm',))
+TAMANIOS = (('50mm x 50mm', '50 mm x 50 mm',), ('75mm x 75mm', '75 mm x 75 mm',),
+            ('100mm x 100mm', '100 mm x 100 mm',), ('125mm x 125mm', '125 mm x 125 mm',))
 
-CANTIDADES = (('cantidad_50', '50',), ('cantidad_100', '100',),
-              ('cantidad_200', '200',), ('cantidad_300', '300',),
-              ('cantidad_500', '500',), ('cantidad_1000', '1000',),
-              ('cantidad_2000', '2000',), ('cantidad_3000', '3000',),
-              ('cantidad_4000', '4000',), ('cantidad_5000', '5000',),
-              ('cantidad_1000', '1000',))
+CANTIDADES = (('50', '50',), ('100', '100',),
+              ('200', '200',), ('300', '300',),
+              ('500', '500',), ('1000', '1000',),
+              ('2000', '2000',), ('3000', '3000',),
+              ('4000', '4000',), ('5000', '5000',),
+              ('10000', '10000',))
 
 
 
@@ -74,7 +74,7 @@ class SizeQuantity(models.Model):
     uploaded_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.size
+        return self.size + " por " + self.quantity
 
     @property
     def image_filename(self):

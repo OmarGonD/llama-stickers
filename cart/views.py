@@ -144,6 +144,8 @@ def full_remove(request, cart_item_id):
 @csrf_exempt
 def cart_charge(request):
 
+    print("CART CHARGEEEE!!!")
+
     culqipy.public_key = settings.CULQI_PUBLISHABLE_KEY
     culqipy.secret_key = settings.CULQI_SECRET_KEY
 

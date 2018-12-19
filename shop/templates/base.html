@@ -9,6 +9,8 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'css/custom.css' %}">
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/preloader.css' %}">
+    <link rel="stylesheet" href="{% static 'css/loader.css' %}">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
           integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
     <link rel="shortcut icon" type="image/png" href="{% static 'img/llama-favicon.png' %}"/>
@@ -23,14 +25,15 @@
 </head>
 <body>
 
+    <div class="general-container">
 
-<div>
+    </div>
 
-    <div class="">
+
 
         {% include 'navbar.html' %}
 
-        {% if not product %}
+        {% if has_shop_in_url %}
 
             {% include 'header.html' %}
 
@@ -47,7 +50,7 @@
 
         </div>
 
-    </div>
+
     {% include 'footer.html' %}
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

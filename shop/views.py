@@ -9,7 +9,7 @@ from django.views.generic.edit import CreateView, FormView
 from .forms import StepOneForm, StepTwoForm
 from cart.models import Cart
 from cart.views import _cart_id
-
+import re
 
 
 # Create your views here.
@@ -29,6 +29,7 @@ def allProdCat(request, c_slug=None):
         products = Product.objects.filter(category=c_page, available=True)
     else:
         products = Product.objects.all().filter(available=True)
+
     return render(request, 'shop/category.html', {'category':c_page, 'products': products})
 
 
@@ -145,7 +146,7 @@ def signupView(request):
             form.save()
             username = form.cleaned_data.get('username')
             signup_user = User.objects.get(username = username)
-            customer_group = Group.objects.get(name = 'Customer')
+            customer_group = Group.objects.get(name = 'Cliente')
             customer_group.user_set.add(signup_user)
     else:
         form = SignUpForm()
