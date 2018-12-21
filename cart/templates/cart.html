@@ -132,13 +132,31 @@
         </table>
         <div class="mx-auto">
 
+
+            {% if user.is_authenticated %}
+
             <button id="buyButton" class="btn btn-secondary btn-block my_custom_btn">Pagar</button>
+
+            {% else %}
+
+            <button id="CannotbuyButton" class="btn btn-secondary btn-block my_custom_btn">Pagar</button>
+
+            {% endif %}
+
             <br>
             <a href="{% url 'shop:allProdCat' %}" class="btn btn-secondary btn-block my_custom_btn">Seguir
                 comprando</a>
         </div>
 
+
+
         <script>
+
+            $('#CannotbuyButton').on('click', function (e) {
+                // Abre el formulario con la configuración en Culqi.settings
+                alert("Para comprar debe ingresar con su cuenta o registrarse");
+                e.preventDefault();
+            });
 
             $('#buyButton').on('click', function (e) {
                 // Abre el formulario con la configuración en Culqi.settings
